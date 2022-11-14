@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../partial/style') %>
+    <style>
+        .img-wrap:hover > img{
+            transform: scale(1.25);
+            transition: all 0.5s;
+        }
+
+    </style>
+</head>
+<body>
+<%- include ('../partial/sideBar', {listCategory, listCategory}) %>
+<div class="container-fluid">
+    <main class="tm-main">
+        <%- include ('../partial/search') %>
+        <div class="row tm-row">
+            <% for (let i = 0; i < listProduct.length; i++) { %>
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a class="over-lay tm-post-link tm-pt-60">
+                        <div class="img-wrap tm-post-link-inner" style="width: 250px; height: 250px">
+                            <img src="/<%= listProduct[i].image %>" alt="Image" class="img-fluid"
+                                 style="width: 100%; height: 100%; object-fit: cover">
+                        </div>
+                    </a>
+                    <p class="tm-pt-30">Name: <%= listProduct[i].name %></p>
+                    <p class="tm-pt-30">
+                        Price: <%= listProduct[i].price %>
+                    </p>
+                    <p class="tm-pt-30">
+                        Quantity: <%= listProduct[i].quantity %>
+                    </p>
+                    <p class="tm-pt-30">
+                        Category: <%= listProduct[i].nameC %>
+                    </p>
+                    <p class="tm-pt-30">
+                        Description: <%= listProduct[i].description %>
+                    </p>
+                    <br>
+                    <button type="button"
+                            style="border: none; background-color: #00CCCC; color: white; padding: 0px 16px"
+                            data-toggle="modal" data-target="#modal-<%= listProduct[i].id %>">
+                        Delete
+                    </button>
+                    <div class="modal fade" id="modal-<%= listProduct[i].id %>" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Do you want to delete this
+                                        product?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        <form action="/products/delete/<%= listProduct[i].id %>" method="post">
+                                            <button type="submit"
+                                                    style="border: none; background-color: #00CCCC; color: white; padding: 0px 10px">
+                                                Delete
+                                            </button>
+                                        </form>
+                                        <hr>
+                                        <a href="/products/detail/<%= listProduct[i].id %>">
+                                            <button style="border: none; background-color: #00CCCC; color: white; padding: 0px 22px">
+                                                Exit
+                                            </button>
+                                        </a>
+                                    </center>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/products/edit/<%= listProduct[i].id %>">
+                        <button style="border: none; background-color: #00CCCC; color: white; padding: 0px 25px">Edit
+                        </button>
+                    </a>
+                </article>
+            <% } %>
+
+        </div>
+        <%- include ('../partial/paging') %>
+    </main>
+</div>
+<%- include ('../partial/javascript') %>
+</body>
+</html>
